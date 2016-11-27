@@ -21,10 +21,12 @@ public class MuscleCollision : MonoBehaviour {
 	public bool paused = false;
 
 	public GameManager gameManager;
+	public Rigidbody rigidb;
 
 	void Awake() {
 		muscle = GameObject.Find (facialMuscle.ToString());	// the muscle we selected from unity inspector
 		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+		rigidb = GameObject.Find ("FPSController").GetComponent<Rigidbody> ();
 	}
 
 	void Start () {
@@ -67,8 +69,10 @@ public class MuscleCollision : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerEnter() {
-		StartCoroutine("WaitToActivateMuscle");
+	void OnTriggerEnter(Collider co) {
+		if (co.CompareTag("Diamond")) {						// if it collides with a diamond TODO: add more tags if needed
+			StartCoroutine("WaitToActivateMuscle");
+		}
 	}
 		
 	private IEnumerator WaitToActivateMuscle() {
