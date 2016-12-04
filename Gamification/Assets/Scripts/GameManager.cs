@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour {
 
 	public bool paused = false;
 	//public FirstPersonController fpc;
+	public int scorePoints = 0;
+
 
 	void Awake() {
 		//fpc = GameObject.Find("FPSController").GetComponent<FirstPersonController>();
@@ -39,5 +41,9 @@ public class GameManager : MonoBehaviour {
 		if (!MouseLook.mouseEnabled) {
 			MouseLook.mouseEnabled = true;
 		}
+	}
+
+	public void AddScorePoints(int points) {
+		scorePoints += points;
 	}
 }
