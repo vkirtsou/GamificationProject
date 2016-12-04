@@ -5,19 +5,10 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class GameManager : MonoBehaviour {
 
 	public bool paused = false;
-	public FirstPersonController fpc;
+	//public FirstPersonController fpc;
 
 	void Awake() {
-		fpc = GameObject.Find("FPSController").GetComponent<FirstPersonController>();
-	}
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+		//fpc = GameObject.Find("FPSController").GetComponent<FirstPersonController>();
 	}
 
 	public void PauseGame() {
@@ -25,6 +16,7 @@ public class GameManager : MonoBehaviour {
 			paused = true;
 			Time.timeScale = 0;
 			Cursor.visible = true;
+			DisableMouse ();
 		}
 	}
 
@@ -33,6 +25,7 @@ public class GameManager : MonoBehaviour {
 			paused = false;
 			Time.timeScale = 1;
 			Cursor.visible = false;
+			EnableMouse ();
 		}
 	}
 

@@ -33,6 +33,7 @@ public class MuscleCollision : MonoBehaviour {
 		if (muscle.gameObject.name == "Muscle1") {		// add assorted numeric key for the correct muscle TODO: change for arduino board input
 			correspondingNumKey = KeyCode.Keypad1;
 			muscleNumber = 1;
+			//audiosource
 		}  else if (muscle.gameObject.name == "Muscle2") {
 			correspondingNumKey = KeyCode.Keypad2;
 			muscleNumber = 2;
@@ -79,14 +80,12 @@ public class MuscleCollision : MonoBehaviour {
 		Debug.Log (muscle.ToString ());
 		muscleCollided = true;
 		gameManager.PauseGame();				// Freeze movement
-		gameManager.DisableMouse ();			// Freeze camera
 		Color defaultColor;
 		defaultColor = muscle.GetComponent<Renderer> ().material.color;		// the current color of the muscle (ie. green)
 		muscle.GetComponent<Renderer> ().material.color = Color.red;		// turn muscle red
 		yield return new WaitUntil(() => muscleActivated);					// hang for player input --> activate the correct muscle
 
 		gameManager.ResumeGame();				// Resume movement
-		gameManager.EnableMouse ();				// resume camera
 		muscle.GetComponent<Renderer> ().material.color = defaultColor;		// turn muscle back to original color
 		muscleCollided = false;			
 		muscleActivated = false;
