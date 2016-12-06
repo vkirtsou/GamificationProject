@@ -1,9 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO.Ports;
 
 public class InputManager : MonoBehaviour {
 
+	[HideInInspector] public List<KeyCode> acceptedInputKeys = new List<KeyCode> {KeyCode.Keypad1, KeyCode.Keypad2, KeyCode.Keypad3,				// TODO: maybe move it in game manager instead + make it private
+		KeyCode.Keypad4, KeyCode.Keypad5, KeyCode.Keypad6, KeyCode.Keypad7, KeyCode.Keypad8, KeyCode.Keypad9};										//TODO: change for arduino board input
+	
 	SerialPort sp = new SerialPort("COM6", 9600);
 	// Use this for initialization
 
