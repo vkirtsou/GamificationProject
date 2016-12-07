@@ -78,6 +78,7 @@ public class MuscleCollision : MonoBehaviour {
 				foreach (KeyCode wrongKey in invalidInputKeys) {	
 					if (Input.GetKeyDown (wrongKey)) {
 						uiManager.ShowWrongAnswerPopup ();	// Popup with options: Retry + Skip
+						// TODO: if some other muscleCollided, dont show wrong
 					}
 				}
 			}

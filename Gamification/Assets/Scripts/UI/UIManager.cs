@@ -69,15 +69,15 @@ public class UIManager : MonoBehaviour {
 		// add score depending on tries
 		StartCoroutine ("WaitAndDisappear");
 		switch (tries) {									// add a score depending on the tries that it took to pass 
-		case 1:
+		case 0:
 			gameManager.AddScorePoints (fullPoints);
 			ShowScorePoints ();
 			break;
-		case 2:
+		case 1:
 			gameManager.AddScorePoints (fullPoints - 50);
 			ShowScorePoints ();
 			break;
-		case 3:
+		case 2:
 			gameManager.AddScorePoints (fullPoints - 100);
 			ShowScorePoints ();
 			break;
