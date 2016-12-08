@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour {
 	public bool paused = false;
 	//public FirstPersonController fpc;
 	public int scorePoints = 0;
+
+	// START //
+	// for debugging. TODO: Delete.
 	public MuscleCollision muscle1;
 	public MuscleCollision muscle2;
 	public MuscleCollision muscle3;
@@ -17,11 +20,14 @@ public class GameManager : MonoBehaviour {
 	public MuscleCollision muscle7;
 	public MuscleCollision muscle8;
 	public MuscleCollision muscle9;
+	public GameManager gameManager;
+	// END //
 
-	public List<int> musclesCurrentlyRed = new List<int> ();
+	public List<int> muscleNumbersCurrentlyRed = new List<int> ();
 
 	void Awake() {
-		//fpc = GameObject.Find("FPSController").GetComponent<FirstPersonController>();
+		// START //
+		// for debugging. TODO: Delete.
 		muscle1 = GameObject.Find("Muscle1").GetComponent<MuscleCollision>();
 		muscle2 = GameObject.Find("Muscle2").GetComponent<MuscleCollision>();
 		muscle3 = GameObject.Find("Muscle3").GetComponent<MuscleCollision>();
@@ -31,57 +37,54 @@ public class GameManager : MonoBehaviour {
 		muscle7 = GameObject.Find("Muscle7").GetComponent<MuscleCollision>();
 		muscle8 = GameObject.Find("Muscle8").GetComponent<MuscleCollision>();
 		muscle9 = GameObject.Find("Muscle9").GetComponent<MuscleCollision>();
+		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+
 	}
 
 	void Update() {
-		// TODO: DELETE. ONLY FOR DEBUGGING
+		// START //
+		// TODO: DELETE. ONLY FOR DEBUGGING /*
 		if (Input.GetKeyDown(KeyCode.Alpha1)) {
-			muscle1.audioSource.Play ();
-			muscle1.StartCoroutine ("WaitToActivateMuscle");
-			muscle1.muscleCollided = true;
+			gameManager.AddRedMuscleToList(0);	// add the muscle that is red in the list of "red" (collided) muscles
+			//muscle1.audioSource.Play ();
+			//muscle1.StartCoroutine ("WaitToActivateMuscle");
+			//muscle1.muscleCollided = true;
+			muscle1.FakeCollidingForTesting ();
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha2)) {
-			muscle2.audioSource.Play ();
-			muscle2.StartCoroutine ("WaitToActivateMuscle");
-			muscle2.muscleCollided = true;
+			gameManager.AddRedMuscleToList(1);
+			muscle2.FakeCollidingForTesting ();
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha3)) {
-			muscle3.audioSource.Play ();
-			muscle3.StartCoroutine ("WaitToActivateMuscle");
-			muscle3.muscleCollided = true;
+			gameManager.AddRedMuscleToList(2);
+			muscle3.FakeCollidingForTesting ();
 		}
 
 		if (Input.GetKeyDown(KeyCode.Alpha4)) {
-			muscle4.audioSource.Play ();
-			muscle4.StartCoroutine ("WaitToActivateMuscle");
-			muscle4.muscleCollided = true;
+			gameManager.AddRedMuscleToList(3);
+			muscle4.FakeCollidingForTesting ();
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha5)) {
-			muscle5.audioSource.Play ();
-			muscle5.StartCoroutine ("WaitToActivateMuscle");
-			muscle5.muscleCollided = true;
+			gameManager.AddRedMuscleToList(4);
+			muscle5.FakeCollidingForTesting ();
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha6)) {
-			muscle6.audioSource.Play ();
-			muscle6.StartCoroutine ("WaitToActivateMuscle");
-			muscle6.muscleCollided = true;
+			gameManager.AddRedMuscleToList(5);
+			muscle6.FakeCollidingForTesting ();
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha7)) {
-			muscle7.audioSource.Play ();
-			muscle7.StartCoroutine ("WaitToActivateMuscle");
-			muscle7.muscleCollided = true;
+			gameManager.AddRedMuscleToList(6);
+			muscle7.FakeCollidingForTesting ();
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha8)) {
-			muscle8.audioSource.Play ();
-			muscle8.StartCoroutine ("WaitToActivateMuscle");
-			muscle8.muscleCollided = true;
+			gameManager.AddRedMuscleToList(7);
+			muscle8.FakeCollidingForTesting ();
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha9)) {
-			muscle9.audioSource.Play ();
-			muscle9.StartCoroutine ("WaitToActivateMuscle");
-			muscle9.muscleCollided = true;
+			gameManager.AddRedMuscleToList(8);
+			muscle9.FakeCollidingForTesting ();
 		}
-
+		// END //
 	}
 	public void PauseGame() {
 		if (!paused) {
@@ -115,5 +118,17 @@ public class GameManager : MonoBehaviour {
 
 	public void AddScorePoints(int points) {
 		scorePoints += points;
+	}
+
+	public void AddRedMuscleToList(int i) {
+		if (!muscleNumbersCurrentlyRed.Contains(i)) {
+			muscleNumbersCurrentlyRed.Add (i);
+		}
+	}
+
+	public void RemoveRedMuscleFromList(int i) {
+		if (muscleNumbersCurrentlyRed.Contains (i)) {
+			muscleNumbersCurrentlyRed.Remove (i);
+		}
 	}
 }

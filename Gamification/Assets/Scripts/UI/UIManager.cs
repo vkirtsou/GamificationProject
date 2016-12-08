@@ -31,7 +31,6 @@ public class UIManager : MonoBehaviour {
 	}
 
 	public void ShowWrongAnswerPopup() {
-		//play sound
 		audiosource.clip = audioWrongAnswer;
 		audiosource.Play ();
 		wrongAnswerPopup.SetActive (true);
@@ -40,9 +39,6 @@ public class UIManager : MonoBehaviour {
 	}
 
 	public void RetryForMuscle() {
-		// play sound
-		//audiosource.clip = clickButton;
-		//audiosource.Play ();
 		wrongAnswerPopup.SetActive (false);
 		darkerTint.SetActive (false);
 		isPopupActive = false;
@@ -50,7 +46,6 @@ public class UIManager : MonoBehaviour {
 	}
 
 	public void SkipMuscle() {
-		//play sound
 		wrongAnswerPopup.SetActive (false);
 		darkerTint.SetActive (false);
 		isPopupActive = false;

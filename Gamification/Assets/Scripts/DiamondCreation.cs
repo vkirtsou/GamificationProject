@@ -26,9 +26,9 @@ public class DiamondCreation : MonoBehaviour {
 			cube.transform.parent = diamonds.transform;							// parent the cube/diamond
 			cube.tag = "Diamond";												// tag it as "Diamond"
 			cube.AddComponent(typeof(DiamondBehavior));							// attach the diamond script
-			cube.AddComponent(typeof(AudioSource));
+			//cube.AddComponent(typeof(AudioSource));
 			cube.GetComponent<BoxCollider> ().isTrigger = true;					// make it trigger
-			cube.GetComponent<AudioSource>().pitch = Random.Range (0.5f, 1.5f);
+			//cube.GetComponent<AudioSource>().pitch = Random.Range (0.5f, 1.5f);
 
 		}
 	}

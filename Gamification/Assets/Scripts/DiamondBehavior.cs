@@ -12,13 +12,13 @@ public class DiamondBehavior : MonoBehaviour {
 	Vector3 style3 = new Vector3(1f, -1f, 0f);
 	Vector3 style4 = new Vector3 (0f, -1f, 1f);
 
-	AudioSource audioSource;
-	// Use this for initialization
-	AudioClip bubblePop;
+	//AudioSource audioSource;
+	//AudioClip bubblePop;
+
 	void Start () {
 		DecideRotationRandomness();
-		audioSource = GetComponent<AudioSource> ();
-		bubblePop = (AudioClip)Resources.Load ("T_bubblePop");
+		//audioSource = GetComponent<AudioSource> ();
+		//bubblePop = (AudioClip)Resources.Load ("T_bubblePop");
 	}
 	
 	// Update is called once per frame
@@ -69,16 +69,16 @@ public class DiamondBehavior : MonoBehaviour {
 		}
 	}
 
-	void OnTriggerEnter(Collider co) {
+	void OnTriggerEnter(Collider co) {			// TODO: DELETE?
 		if (co.tag.Equals ("Player")) {
-			this.GetComponent<Renderer> ().material.color = Color.red;
+			this.GetComponent<Renderer> ().material.color = Color.red;			// TODO: DELETE.
 			Debug.Log ("player collided!");
 			StartCoroutine ("WaitAndDestroy");
 		}
 
 		if (co.tag.Equals ("Muscle")) {
 			Debug.Log ("muscle collided!");
-			this.GetComponent<Renderer> ().material.color = Color.blue;
+			this.GetComponent<Renderer> ().material.color = Color.blue;			// TODO: DELETE.
 
 			StartCoroutine ("WaitAndDestroy");
 		}
@@ -86,7 +86,7 @@ public class DiamondBehavior : MonoBehaviour {
 
 	IEnumerator WaitAndDestroy() {
 		yield return new WaitForSeconds (0.5f);
-		audioSource.Play ();
+		//audioSource.Play ();
 		Destroy (gameObject);
 	}
 }
