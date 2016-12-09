@@ -6,9 +6,9 @@ using System.IO.Ports;
 public class InputManager : MonoBehaviour {
 
 	[HideInInspector] public List<KeyCode> acceptedInputKeys = new List<KeyCode> {KeyCode.Keypad1, KeyCode.Keypad2, KeyCode.Keypad3,				// TODO: maybe move it in game manager instead + make it private
-		KeyCode.Keypad4, KeyCode.Keypad5, KeyCode.Keypad6, KeyCode.Keypad7, KeyCode.Keypad8, KeyCode.Keypad9};										//TODO: change for arduino board input
+		KeyCode.Keypad4, KeyCode.Keypad5, KeyCode.Keypad6, KeyCode.Keypad7, KeyCode.Keypad8, KeyCode.Keypad9};										
 
-	public List<int> acceptedInputKeysArd = new List<int> { 49, 50, 51, 52, 53, 54, 55, 56, 57 };		// TODO: hide
+	[HideInInspector] public List<int> acceptedInputKeysArd = new List<int> { 49, 50, 51, 52, 53, 54, 55, 56, 57 };	
 
 	//SerialPort sp = new SerialPort("COM6", 9600);
 	SerialPort sp = new SerialPort();
@@ -49,7 +49,7 @@ public class InputManager : MonoBehaviour {
 				arduinoInput.Add (sp.ReadByte ());
 				arduinoInput.Remove (10);
 				arduinoInput.Remove (13);
-				Debug.Log("test1");
+				//Debug.Log("test1");
 				return arduinoInput [arduinoInput.Count - 1];
 			} catch (System.Exception) {
 				return -1;
@@ -71,65 +71,6 @@ public class InputManager : MonoBehaviour {
 			return false;
 		}
 	}
-
-	/*public bool CompareWithArduinoInput (int read) {
-		ClearArduinoInput ();
-		ArduinoInputRead ();
-		if (arduinoInput.Count > 0) {
-			if (arduinoInput [0] == read) {		// if the first (and only) element of the list is equal to the read, return true
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
-	}
-
-	public bool ArduinoInputExists() {
-		if (arduinoInput.Count > 0) {
-			return true;
-		} else {
-			return false;
-		}
-	}*/
+		
 }
-
-	/*
-	//SerialPort serial1;
-	byte[] buf = new byte[4]; // creates a byte array the size of the data you want to receive.
-	int bufCount = 0;
-	int a,b;
-
-	void Start() {
-		//serial1=new SerialPort();
-	}
-
-	 void OnGUI()
-    {
-        if(GUI.Button(new Rect(10,10,100,50),"read"))
-        {
-            //serial1.PortName="COM1";
-            serial1.Parity=Parity.None;
-            //serial1.BaudRate=9600;
-            serial1.DataBits=8;
-            serial1.StopBits=StopBits.One;
-            serial1.Open();
-            bufCount = 0;
-            bufCount += serial1.Read(buf, bufCount, buf.Length - bufCount);
- 
-            a = 0;
-            b = 0;
-            while (a < bufCount)
-            {
-                b += buf[a];
-                a++;
-            }
-            print(b);
-            serial1.Close();
-           
-           
-        }
 	
-	}
-}*/

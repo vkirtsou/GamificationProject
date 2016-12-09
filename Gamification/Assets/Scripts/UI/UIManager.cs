@@ -36,13 +36,15 @@ public class UIManager : MonoBehaviour {
 		wrongAnswerPopup.SetActive (true);
 		darkerTint.SetActive (true);
 		isPopupActive = true;
+		gameManager.PauseGame ();
+		tries++;
 	}
 
 	public void RetryForMuscle() {
 		wrongAnswerPopup.SetActive (false);
 		darkerTint.SetActive (false);
 		isPopupActive = false;
-		tries++;
+
 	}
 
 	public void SkipMuscle() {
@@ -57,7 +59,8 @@ public class UIManager : MonoBehaviour {
 		audiosource.clip = audioCorrectAnswer;
 		audiosource.Play ();
 		correctAnswerPopup.SetActive (true);
-		//darkerTint.SetActive (true);
+		wrongAnswerPopup.SetActive (false);
+		darkerTint.SetActive (false);
 		isPopupActive = true;
 		//tries++;
 		Debug.Log ("Correct answer with " + tries + " tries!");

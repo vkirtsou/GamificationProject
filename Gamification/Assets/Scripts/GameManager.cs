@@ -6,7 +6,6 @@ using UnityStandardAssets.Characters.FirstPerson;
 public class GameManager : MonoBehaviour {
 
 	public bool paused = false;
-	//public FirstPersonController fpc;
 	public int scorePoints = 0;
 
 	// START //
@@ -24,6 +23,7 @@ public class GameManager : MonoBehaviour {
 	// END //
 
 	public List<int> muscleNumbersCurrentlyRed = new List<int> ();
+	public List<int> muscleNumbersCurrentlyRedArd = new List<int>();
 
 	void Awake() {
 		// START //
@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour {
 		muscle7 = GameObject.Find("Muscle7").GetComponent<MuscleCollision>();
 		muscle8 = GameObject.Find("Muscle8").GetComponent<MuscleCollision>();
 		muscle9 = GameObject.Find("Muscle9").GetComponent<MuscleCollision>();
-		gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+		// END //
 
 	}
 
@@ -45,43 +45,43 @@ public class GameManager : MonoBehaviour {
 		// START //
 		// TODO: DELETE. ONLY FOR DEBUGGING /*
 		if (Input.GetKeyDown(KeyCode.Alpha1)) {
-			gameManager.AddRedMuscleToList(0);	// add the muscle that is red in the list of "red" (collided) muscles
+			AddRedMuscleToList(0);	// add the muscle that is red in the list of "red" (collided) muscles
 			//muscle1.audioSource.Play ();
 			//muscle1.StartCoroutine ("WaitToActivateMuscle");
 			//muscle1.muscleCollided = true;
 			muscle1.FakeCollidingForTesting ();
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha2)) {
-			gameManager.AddRedMuscleToList(1);
+			AddRedMuscleToList(1);
 			muscle2.FakeCollidingForTesting ();
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha3)) {
-			gameManager.AddRedMuscleToList(2);
+			AddRedMuscleToList(2);
 			muscle3.FakeCollidingForTesting ();
 		}
 
 		if (Input.GetKeyDown(KeyCode.Alpha4)) {
-			gameManager.AddRedMuscleToList(3);
+			AddRedMuscleToList(3);
 			muscle4.FakeCollidingForTesting ();
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha5)) {
-			gameManager.AddRedMuscleToList(4);
+			AddRedMuscleToList(4);
 			muscle5.FakeCollidingForTesting ();
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha6)) {
-			gameManager.AddRedMuscleToList(5);
+			AddRedMuscleToList(5);
 			muscle6.FakeCollidingForTesting ();
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha7)) {
-			gameManager.AddRedMuscleToList(6);
+			AddRedMuscleToList(6);
 			muscle7.FakeCollidingForTesting ();
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha8)) {
-			gameManager.AddRedMuscleToList(7);
+			AddRedMuscleToList(7);
 			muscle8.FakeCollidingForTesting ();
 		}
 		if (Input.GetKeyDown(KeyCode.Alpha9)) {
-			gameManager.AddRedMuscleToList(8);
+			AddRedMuscleToList(8);
 			muscle9.FakeCollidingForTesting ();
 		}
 		// END //
@@ -123,12 +123,16 @@ public class GameManager : MonoBehaviour {
 	public void AddRedMuscleToList(int i) {
 		if (!muscleNumbersCurrentlyRed.Contains(i)) {
 			muscleNumbersCurrentlyRed.Add (i);
+			int arduinoEquivalent = 49 + i;		// ascii 
+			muscleNumbersCurrentlyRedArd.Add (arduinoEquivalent);
 		}
 	}
 
 	public void RemoveRedMuscleFromList(int i) {
 		if (muscleNumbersCurrentlyRed.Contains (i)) {
 			muscleNumbersCurrentlyRed.Remove (i);
+			int arduinoEquivalent = 49 + i;
+			muscleNumbersCurrentlyRedArd.Remove (arduinoEquivalent);
 		}
 	}
 }

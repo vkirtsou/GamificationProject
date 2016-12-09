@@ -35,7 +35,7 @@ public class MuscleCollision : MonoBehaviour {
 	private List<int> acceptedInputKeysArd;			// int type when using arduino for input
 	public List<int> invalidInputKeysArd;
 
-	public AudioClip[] audiosForMuscles = new AudioClip[9];
+	public AudioClip audioBubblePop;
 	//public AudioClip[] audiosForMuscles = new AudioClip;
 	public AudioSource audioSource;
 
@@ -81,7 +81,8 @@ public class MuscleCollision : MonoBehaviour {
 		correspondingArdKey = acceptedInputKeysArd[muscleNumber];			// the corresponding key to activate the muscle
 		invalidInputKeysArd.Remove (correspondingArdKey);					// remove the correct key from the list of the invalid keys
 
-		audioSource.clip = audiosForMuscles [muscleNumber];				// the audio to play for each muscle
+		//audioSource.clip = audiosForMuscles [muscleNumber];				// the audio to play for each muscle
+		audioSource.clip = audioBubblePop;
 	}
 
 	void Update() {
@@ -105,7 +106,7 @@ public class MuscleCollision : MonoBehaviour {
 					if (inputManager.GetArdKeyDown(wrongKey) && inputManager.read != -1) {
 						Debug.Log ("wrong answer");
 						//if (gameManager.muscleNumbersCurrentlyRed.Count <= 1 || !gameManager.muscleNumbersCurrentlyRed.Contains(wrongKey)) {			
-						if (gameManager.muscleNumbersCurrentlyRed.Count <= 1) {			// if more than one muscle is red/collided with, dont show wrong popup
+						if (gameManager.muscleNumbersCurrentlyRed.Count <= 1 || !gameManager.muscleNumbersCurrentlyRedArd.Contains(wrongKey)) {			// if more than one muscle is red/collided with, dont show wrong popup
 							uiManager.ShowWrongAnswerPopup ();							// Popup with options: Retry + Skip
 							//gameManager.PauseGame();
 
@@ -114,8 +115,6 @@ public class MuscleCollision : MonoBehaviour {
 				}
 			}
 		}
-
-
 	}
 
 
