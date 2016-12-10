@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour {
 
 	// START //
 	// for debugging. TODO: Delete.
-	public MuscleCollision muscle1;
+	/*public MuscleCollision muscle1;
 	public MuscleCollision muscle2;
 	public MuscleCollision muscle3;
 	public MuscleCollision muscle4;
@@ -21,14 +21,14 @@ public class GameManager : MonoBehaviour {
 	public MuscleCollision muscle9;
 	public GameManager gameManager;
 	// END //
-
+*/
 	public List<int> muscleNumbersCurrentlyRed = new List<int> ();
 	public List<int> muscleNumbersCurrentlyRedArd = new List<int>();
 
 	void Awake() {
 		// START //
 		// for debugging. TODO: Delete.
-		muscle1 = GameObject.Find("Muscle1").GetComponent<MuscleCollision>();
+		/*muscle1 = GameObject.Find("Muscle1").GetComponent<MuscleCollision>();
 		muscle2 = GameObject.Find("Muscle2").GetComponent<MuscleCollision>();
 		muscle3 = GameObject.Find("Muscle3").GetComponent<MuscleCollision>();
 		muscle4 = GameObject.Find("Muscle4").GetComponent<MuscleCollision>();
@@ -36,12 +36,13 @@ public class GameManager : MonoBehaviour {
 		muscle6 = GameObject.Find("Muscle6").GetComponent<MuscleCollision>();
 		muscle7 = GameObject.Find("Muscle7").GetComponent<MuscleCollision>();
 		muscle8 = GameObject.Find("Muscle8").GetComponent<MuscleCollision>();
-		muscle9 = GameObject.Find("Muscle9").GetComponent<MuscleCollision>();
+		muscle9 = GameObject.Find("Muscle9").GetComponent<MuscleCollision>();*/
 		// END //
 
 	}
 
 	void Update() {
+		/*
 		// START //
 		// TODO: DELETE. ONLY FOR DEBUGGING /*
 		if (Input.GetKeyDown(KeyCode.Alpha1)) {
@@ -85,6 +86,7 @@ public class GameManager : MonoBehaviour {
 			muscle9.FakeCollidingForTesting ();
 		}
 		// END //
+		*/
 	}
 	public void PauseGame() {
 		if (!paused) {

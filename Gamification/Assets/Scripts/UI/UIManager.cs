@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
 
-	public GameObject wrongAnswerPopup, correctAnswerPopup, darkerTint, escapePopup;
+	public GameObject wrongAnswerPopup, correctAnswerPopup, darkerTint, escapePopup, crosshair;
 	public Text scoreUIText;
 
 	public bool isPopupActive = false;		// TODO: make it private
@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour {
 	public int fullPoints = 300;
 
 	private GameManager gameManager;
+	private Pause pauseScript;
 	public AudioSource audiosource;
 
 	public AudioClip audioWrongAnswer;
@@ -28,19 +29,14 @@ public class UIManager : MonoBehaviour {
 		scoreUIText = GameObject.Find("ScorePanel").GetComponentInChildren<Text> ();
 		ShowScorePoints ();
 		audiosource = GetComponent<AudioSource> ();
+		pauseScript = GameObject.Find ("UI").GetComponent<Pause> ();
 	}
 
 	void Update() {
-		if (Input.GetKeyDown(KeyCode.Escape)) {
-			if (escapePopup.activeSelf) {
-				escapePopup.SetActive (false);
-				darkerTint.SetActive (false);
-				gameManager.ResumeGame ();
-			} else {				// pause
-				escapePopup.SetActive (true);
-				darkerTint.SetActive (true);
-				gameManager.PauseGame ();
-			}
+		if (gameManager.paused || pauseScript.isPaused) {		// to remove the annoying cross
+			crosshair.SetActive (false);
+		} else {
+			crosshair.SetActive (true);
 		}
 	}
 
@@ -112,10 +108,5 @@ public class UIManager : MonoBehaviour {
 	public void ShowScorePoints() {
 		scoreUIText.text = "Score: " + gameManager.scorePoints;
 	}
-
-	public void ResumeGame() {
-		gameManager.ResumeGame ();
-		escapePopup.SetActive (false);
-		darkerTint.SetActive (false);
-	}
+		
 }

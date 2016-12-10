@@ -19,7 +19,7 @@ public class BubbleBehavior : MonoBehaviour {
 
 	BubbleCreation bubbleCreation;
 
-	private Vector3 min, max, direction;
+	public Vector3 min, max, direction;
 
 	void Start () {
 		direction = GetMovementStyle ();							// the initial direction vector that the bubble will move towards

@@ -16,7 +16,7 @@ public class MuscleCollision : MonoBehaviour {
 	public KeyCode correspondingNumKey;				// the corresponding numeric key for this muscle
 	public int correspondingArdKey; 				// the corresponding arduino key for this muscle
 
-	public GameObject muscle;
+	public GameObject muscle, bubblePopPrefab;
 	public FacialMuscleType facialMuscle;
 	public int muscleNumber; 						
 	public bool muscleCollided = false; 			// true if the muscle collided with some object
@@ -121,6 +121,8 @@ public class MuscleCollision : MonoBehaviour {
 	void OnTriggerEnter(Collider co) {
 		if (co.CompareTag("Diamond")) {						// if it collides with a diamond TODO: add more tags if needed
 			audioSource.Play();								// play the collision audio for the muscle
+			Vector3 bubblePosition = co.GetComponent<Transform>().position;
+			//Instantiate (bubblePopPrefab, bubblePosition, Quaternion.identity);
 			gameManager.AddRedMuscleToList(muscleNumber);	// add the muscle that is red in the list of "red" (collided) muscles
 			muscleCollided = true;
 			gameManager.PauseGame();						// Freeze movement + Camera

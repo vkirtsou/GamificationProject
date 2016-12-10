@@ -5,10 +5,10 @@ public class Pause : MonoBehaviour {
 
 
 	private ShowPanels showPanels;						//Reference to the ShowPanels script used to hide and show UI panels
-	private bool isPaused;								//Boolean to check if the game is paused or not
+	public bool isPaused;								//Boolean to check if the game is paused or not
 	private StartOptions startScript;					//Reference to the StartButton script
 	private GameManager gameManager;
-
+	public GameObject soundOptionsPanel;
 	//Awake is called before Start()
 	void Awake()
 	{
@@ -61,5 +61,19 @@ public class Pause : MonoBehaviour {
 		gameManager.ResumeGame ();
 	}
 
+	public void ToggleSoundOptions() {
+		if (soundOptionsPanel.activeSelf) {
+			soundOptionsPanel.SetActive (false);
+		} else {
+			soundOptionsPanel.SetActive (true);
+		}
+	}
+
+	public void ReturnToMainMenu() {
+		startScript.ReturnToMenu ();
+		if (showPanels.pausePanel.activeSelf) {
+			showPanels.HidePausePanel ();
+		}
+	}
 
 }
