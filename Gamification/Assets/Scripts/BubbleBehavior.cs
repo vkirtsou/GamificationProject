@@ -1,72 +1,100 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BubbleBehavior : MonoBehaviour {
 
-	public int rotationType;
-	public int movingType;
+	public int movingType = -1;
 	public float speed;
 
-	Vector3 style1 = new Vector3(1f, 1f, 0f);
-	Vector3 style2 = new Vector3 (0f, 1f, 1f);
-	Vector3 style3 = new Vector3(1f, -1f, 0f);
-	Vector3 style4 = new Vector3 (0f, -1f, 1f);
+	// Bubble properties
+	private Rigidbody bubbleRigid;
+	private Vector3 bubblePosition, positionCorrection;
+	//public Transform parentTransform;
 
-	//AudioSource audioSource;
-	//AudioClip bubblePop;
+	// Variables (or constants?) for random motion
+	//public float movementSpeed = 30f;			// movement speed of the bubble
+	public float maxVelocity = 0.1f;			// maximum accepted velocity of the bubble
+	public float space = 0.005f; 					// What's that for? i think for space between the bubble + wall
+
+	BubbleCreation bubbleCreation;
+
+	private Vector3 min, max, direction;
 
 	void Start () {
-		DecideRotationRandomness();
-		//audioSource = GetComponent<AudioSource> ();
-		//bubblePop = (AudioClip)Resources.Load ("T_bubblePop");
+		direction = GetMovementStyle ();							// the initial direction vector that the bubble will move towards
+		speed = Random.Range (15, 35);								// the speed that the bubble moves
+		bubbleCreation = GetComponentInParent<BubbleCreation> ();
+		bubblePosition = GetComponent<Transform> ().position; 
+		bubbleRigid = GetComponent<Rigidbody> ();
+		min = bubbleCreation.min;									// min & max: the borders of the room aka. the space that the bubbles can move in
+		max = bubbleCreation.max;
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		RotateDiamondRandom ();
+	void FixedUpdate () {
+		MoveBubblesRandom();
 	}
-
-	void DecideRotationRandomness() {
-		movingType = (int)Random.Range (4, 8);
-		rotationType = (int)Random.Range(4, 8);
-		speed = Random.Range (15, 35);
-	}
-
-	void MoveObjectsRandom() {
 		
+	void MoveBubblesRandom() {
+		// if the bubble is still within the boundaries, move it
+		if ((bubblePosition.x > min.x) && (bubblePosition.x < max.x)
+		    && (bubblePosition.y > min.y) && (bubblePosition.y < max.y)
+		    && (bubblePosition.z > min.z) && (bubblePosition.z < max.z)) {
+
+			bubbleRigid.AddForce (direction * Time.fixedDeltaTime * speed);
+
+			// clamp the acceleration to maxVelocity.
+			if (Mathf.Abs (bubbleRigid.velocity.x) > maxVelocity) {
+				bubbleRigid.velocity = new Vector3 (Mathf.Sign (bubbleRigid.velocity.x) * maxVelocity, bubbleRigid.velocity.y, bubbleRigid.velocity.z);
+			}
+			if (Mathf.Abs (bubbleRigid.velocity.y) > maxVelocity) {
+				bubbleRigid.velocity = new Vector3 (bubbleRigid.velocity.x, Mathf.Sign (bubbleRigid.velocity.y) * maxVelocity, bubbleRigid.velocity.z);
+			}
+			if (Mathf.Abs (bubbleRigid.velocity.z) > maxVelocity) {
+				bubbleRigid.velocity = new Vector3 (bubbleRigid.velocity.x, bubbleRigid.velocity.y, Mathf.Sign (bubbleRigid.velocity.z) * maxVelocity);
+			}
+
+
+			bubblePosition = transform.position;	// update the position of the bubble
+		} else {			// else correct its position and give it another direction (bouncing on the wall)
+			if (bubblePosition.x <= min.x) {
+				positionCorrection = new Vector3 (transform.position.x + space, transform.position.y, transform.position.z);
+			} else if (bubblePosition.x >= max.x) {
+				positionCorrection = new Vector3 (transform.position.x - space, transform.position.y, transform.position.z);
+			} else if (bubblePosition.y <= min.y) {		// if outside of bottom barrier
+				positionCorrection = new Vector3 (transform.position.x, transform.position.y + space, transform.position.z); // move it a bit upwards & change direction
+			} else if (bubblePosition.y >= max.y) {		// if outside of top barrier
+				positionCorrection = new Vector3 (transform.position.x, transform.position.y - space, transform.position.z); // move it a bit downwards & change direction
+			} else if (bubblePosition.z <= min.z) {		
+				positionCorrection = new Vector3 (transform.position.x, transform.position.y, transform.position.z + space); // move it a bit upwards & change direction
+			} else if (bubblePosition.z >= max.z) {		
+				positionCorrection = new Vector3 (transform.position.x, transform.position.y, transform.position.z - space); // move it a bit downwards & change direction
+			}
+				
+			direction = GetMovementStyle ();					// get a pseudorandom direction vector
+			bubbleRigid.MovePosition (positionCorrection);		// correct the position of the bubble (move just a little bit)
+			bubbleRigid.velocity = Vector3.zero;								// reset the velocity
+			bubbleRigid.AddForce (direction * Time.fixedDeltaTime * speed);		// start moving the bubble again
+		
+			bubblePosition = transform.position;
+		}
 	}
 
-	void RotateDiamondRandom() {			// random rotation for each cube 
+	Vector3 GetMovementStyle() {
+		List<int> combination = new List<int>();			// a list with the combination of numbers for the vector: -1, 0 or 1
+		do {
+			combination.Clear();
+			for (int i = 0; i < 3; i++) {
+				combination.Add (RollNumber ());
+			}
+		} while (combination.IndexOf (0) != combination.LastIndexOf (0));		// make sure that there are no more than one 0s, to avoid vertical/horizontal move
+		return new Vector3 (combination [0], combination [1], combination [2]);
 
-		switch (rotationType) {				// currently working with cases 4 to 7 only
-		case 0:
-			gameObject.transform.Rotate (Vector3.right, Time.deltaTime * speed);
-			break;
-		case 1:
-			gameObject.transform.Rotate (Vector3.up, Time.deltaTime * speed);
-			break;
-		case 2:
-			gameObject.transform.Rotate (Vector3.down, Time.deltaTime * speed);
-			break;
-		case 3:
-			gameObject.transform.Rotate (Vector3.left, Time.deltaTime * speed);
-			break;
-		case 4:
-			gameObject.transform.Rotate (style1, Time.deltaTime * speed);
-			break;
-		case 5:
-			gameObject.transform.Rotate (style2, Time.deltaTime * speed);
-			break;
-		case 6:
-			gameObject.transform.Rotate (style3, Time.deltaTime * speed);
-			break;
-		case 7:
-			gameObject.transform.Rotate (style4, Time.deltaTime * speed);
-			break;
-		default:
-			Debug.Log ("oops");
-			break;
-		}
+	}
+
+	int RollNumber() {							// a random int -1, 0 or 1
+		return (int)Random.Range (-1, 2);
 	}
 
 	void OnTriggerEnter(Collider co) {			// TODO: DELETE?

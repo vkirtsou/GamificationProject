@@ -123,7 +123,7 @@ public class MuscleCollision : MonoBehaviour {
 			audioSource.Play();								// play the collision audio for the muscle
 			gameManager.AddRedMuscleToList(muscleNumber);	// add the muscle that is red in the list of "red" (collided) muscles
 			muscleCollided = true;
-			gameManager.PauseGame();				// Freeze movement + Camera
+			gameManager.PauseGame();						// Freeze movement + Camera
 			StartCoroutine("WaitToActivateMuscle");
 		}
 	}
@@ -132,7 +132,7 @@ public class MuscleCollision : MonoBehaviour {
 		audioSource.Play();								// play the collision audio for the muscle
 		gameManager.AddRedMuscleToList(muscleNumber);	// add the muscle that is red in the list of "red" (collided) muscles
 		muscleCollided = true;
-		gameManager.PauseGame();				// Freeze movement + Camera
+		gameManager.PauseGame();						// Freeze movement + Camera
 		StartCoroutine("WaitToActivateMuscle");
 	}
 

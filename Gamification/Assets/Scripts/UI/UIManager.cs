@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour {
 
-	public GameObject wrongAnswerPopup, correctAnswerPopup, darkerTint;
+	public GameObject wrongAnswerPopup, correctAnswerPopup, darkerTint, escapePopup;
 	public Text scoreUIText;
 
 	public bool isPopupActive = false;		// TODO: make it private
@@ -28,6 +28,20 @@ public class UIManager : MonoBehaviour {
 		scoreUIText = GameObject.Find("ScorePanel").GetComponentInChildren<Text> ();
 		ShowScorePoints ();
 		audiosource = GetComponent<AudioSource> ();
+	}
+
+	void Update() {
+		if (Input.GetKeyDown(KeyCode.Escape)) {
+			if (escapePopup.activeSelf) {
+				escapePopup.SetActive (false);
+				darkerTint.SetActive (false);
+				gameManager.ResumeGame ();
+			} else {				// pause
+				escapePopup.SetActive (true);
+				darkerTint.SetActive (true);
+				gameManager.PauseGame ();
+			}
+		}
 	}
 
 	public void ShowWrongAnswerPopup() {
@@ -97,5 +111,11 @@ public class UIManager : MonoBehaviour {
 
 	public void ShowScorePoints() {
 		scoreUIText.text = "Score: " + gameManager.scorePoints;
+	}
+
+	public void ResumeGame() {
+		gameManager.ResumeGame ();
+		escapePopup.SetActive (false);
+		darkerTint.SetActive (false);
 	}
 }
