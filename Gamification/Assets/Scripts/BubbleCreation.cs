@@ -37,7 +37,8 @@ public class BubbleCreation : MonoBehaviour {
 		max = roomAreaForMoving.max;
 	}
 	void Start () {
-		CreateDiamonds ();
+		//CreateDiamonds ();
+		StartCoroutine("WaitAndCreateDiamonds");
 	}
 
 	void CreateDiamonds() {
@@ -56,6 +57,27 @@ public class BubbleCreation : MonoBehaviour {
 			bubble.AddComponent<Rigidbody>();
 			bubble.GetComponent<Rigidbody> ().useGravity = false;
 			bubble.GetComponent<Renderer> ().material = bubbleMaterial;
+		}
+	}
+
+	IEnumerator WaitAndCreateDiamonds() {
+		yield return new WaitForSeconds (1f);
+		for (int i = 0; i < numberOfBubbles; i++) {
+			//GameObject bubble = (GameObject)Instantiate (Resources.Load ("Bubble"), bubblePos, Quaternion.identity);
+
+			GameObject bubble = GameObject.CreatePrimitive (PrimitiveType.Sphere);	// creates a cube
+			bubble.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);		// make it smaller
+			Vector3 bubblePos = CreateRandomVector3();
+			bubble.transform.position = bubblePos;									// position it randomly
+			bubble.transform.parent = room.transform;							// parent the cube/diamond
+			bubble.tag = "Diamond";			// TODO: CHANGE TO BUBBLE??				// tag it as "Diamond"
+			bubble.AddComponent(typeof(BubbleBehavior));							// attach the diamond script
+			bubble.GetComponent<SphereCollider> ().isTrigger = true;					// make it trigger
+			//cube.GetComponent<AudioSource>().pitch = Random.Range (0.5f, 1.5f);
+			bubble.AddComponent<Rigidbody>();
+			bubble.GetComponent<Rigidbody> ().useGravity = false;
+			bubble.GetComponent<Renderer> ().material = bubbleMaterial;
+			yield return new WaitForSeconds (0.05f);
 		}
 	}
 

@@ -48,7 +48,6 @@ public class MuscleCollision : MonoBehaviour {
 		audioSource = GetComponent<AudioSource> ();
 		acceptedInputKeys = GameObject.Find ("GameManager").GetComponent<InputManager> ().acceptedInputKeys;
 		acceptedInputKeysArd = GameObject.Find ("GameManager").GetComponent<InputManager> ().acceptedInputKeysArd;
-
 	}
 
 	void Start () {
@@ -96,8 +95,6 @@ public class MuscleCollision : MonoBehaviour {
 						Debug.Log ("wrong answer");
 						if (gameManager.muscleNumbersCurrentlyRed.Count <= 1) {			// if more than one muscle is red/collided with, dont show wrong popup
 							uiManager.ShowWrongAnswerPopup ();							// Popup with options: Retry + Skip
-							//gameManager.PauseGame();
-
 						}							
 					}
 				}		// FOR ARDUINO:
@@ -107,8 +104,6 @@ public class MuscleCollision : MonoBehaviour {
 						//if (gameManager.muscleNumbersCurrentlyRed.Count <= 1 || !gameManager.muscleNumbersCurrentlyRed.Contains(wrongKey)) {			
 						if (gameManager.muscleNumbersCurrentlyRed.Count <= 1 || !gameManager.muscleNumbersCurrentlyRedArd.Contains(wrongKey)) {			// if more than one muscle is red/collided with, dont show wrong popup
 							uiManager.ShowWrongAnswerPopup ();							// Popup with options: Retry + Skip
-							//gameManager.PauseGame();
-
 						}							
 					}
 				}
@@ -120,7 +115,7 @@ public class MuscleCollision : MonoBehaviour {
 	void OnTriggerEnter(Collider co) {
 		if (co.CompareTag("Diamond")) {						// if it collides with a diamond TODO: add more tags if needed
 			audioSource.Play();								// play the collision audio for the muscle
-			inputManager.ArduinoOutputWrite (muscleNumber); // activate LED on the mask
+			//inputManager.ArduinoOutputWrite (muscleNumber); // activate LED on the mask
 			gameManager.AddRedMuscleToList(muscleNumber);	// add the muscle that is red in the list of "red" (collided) muscles
 			muscleCollided = true;
 			gameManager.PauseGame();						// Freeze movement + Camera
@@ -130,7 +125,9 @@ public class MuscleCollision : MonoBehaviour {
 
 	public void FakeCollidingForTesting() {
 		audioSource.Play();								// play the collision audio for the muscle
-		inputManager.ArduinoOutputWrite (muscleNumber); // activate LED on the mask
+		//if (inputManager.sp.IsOpen) {
+		//inputManager.ArduinoOutputWrite (muscleNumber); // activate LED on the mask
+		//}
 		gameManager.AddRedMuscleToList(muscleNumber);	// add the muscle that is red in the list of "red" (collided) muscles
 		muscleCollided = true;
 		gameManager.PauseGame();						// Freeze movement + Camera
@@ -153,7 +150,7 @@ public class MuscleCollision : MonoBehaviour {
 			uiManager.ShowCorrectAnswerPopup ();		
 			muscleActivated = false;					// reset
 		}
-		inputManager.ArduinoOutputWrite (99); 			// send something random to reset
+		//inputManager.ArduinoOutputWrite (99); 			// send something random to reset
 		muscle.GetComponent<Renderer> ().material.color = Color.white;		// turn muscle back to original color
 		//muscle.GetComponent<Renderer> ().material.color = defaultColor;		// turn muscle back to original color
 		muscleCollided = false;							// reset

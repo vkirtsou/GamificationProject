@@ -11,7 +11,7 @@ public class InputManager : MonoBehaviour {
 	[HideInInspector] public List<int> acceptedInputKeysArd = new List<int> { 49, 50, 51, 52, 53, 54, 55, 56, 57 };	
 
 	//SerialPort sp = new SerialPort("COM6", 9600);
-	SerialPort sp = new SerialPort("COM7", 9600, Parity.None, 8, StopBits.One);
+	public SerialPort sp = new SerialPort("COM7", 9600, Parity.None, 8, StopBits.One);
 	GameManager gameManager;
 	// Use this for initialization
 

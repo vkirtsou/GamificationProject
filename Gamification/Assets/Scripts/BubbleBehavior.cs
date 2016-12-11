@@ -97,7 +97,7 @@ public class BubbleBehavior : MonoBehaviour {
 		return (int)Random.Range (-1, 2);
 	}
 
-	void OnTriggerEnter(Collider co) {			// TODO: DELETE?
+	/*void OnTriggerEnter(Collider co) {			// TODO: DELETE?
 		if (co.tag.Equals ("Player")) {
 			this.GetComponent<Renderer> ().material.color = Color.red;			// TODO: DELETE.
 			Debug.Log ("player collided!");
@@ -116,5 +116,5 @@ public class BubbleBehavior : MonoBehaviour {
 		yield return new WaitForSeconds (0.5f);
 		//audioSource.Play ();
 		Destroy (gameObject);
-	}
+	}*/
 }
