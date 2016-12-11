@@ -34,6 +34,7 @@ public class UIManager : MonoBehaviour {
 
 	void Update() {
 		if (gameManager.paused || pauseScript.isPaused) {		// to remove the annoying cross
+		//if (gameManager.paused) {
 			crosshair.SetActive (false);
 		} else {
 			crosshair.SetActive (true);

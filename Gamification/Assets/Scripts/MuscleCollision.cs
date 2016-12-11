@@ -94,7 +94,6 @@ public class MuscleCollision : MonoBehaviour {
 					foreach (KeyCode wrongKey in invalidInputKeys) {	
 					if (Input.GetKeyDown (wrongKey)) {
 						Debug.Log ("wrong answer");
-						//if (gameManager.muscleNumbersCurrentlyRed.Count <= 1 || !gameManager.muscleNumbersCurrentlyRed.Contains(wrongKey)) {			
 						if (gameManager.muscleNumbersCurrentlyRed.Count <= 1) {			// if more than one muscle is red/collided with, dont show wrong popup
 							uiManager.ShowWrongAnswerPopup ();							// Popup with options: Retry + Skip
 							//gameManager.PauseGame();
@@ -121,8 +120,7 @@ public class MuscleCollision : MonoBehaviour {
 	void OnTriggerEnter(Collider co) {
 		if (co.CompareTag("Diamond")) {						// if it collides with a diamond TODO: add more tags if needed
 			audioSource.Play();								// play the collision audio for the muscle
-			Vector3 bubblePosition = co.GetComponent<Transform>().position;
-			//Instantiate (bubblePopPrefab, bubblePosition, Quaternion.identity);
+			inputManager.ArduinoOutputWrite (muscleNumber); // activate LED on the mask
 			gameManager.AddRedMuscleToList(muscleNumber);	// add the muscle that is red in the list of "red" (collided) muscles
 			muscleCollided = true;
 			gameManager.PauseGame();						// Freeze movement + Camera
@@ -132,6 +130,7 @@ public class MuscleCollision : MonoBehaviour {
 
 	public void FakeCollidingForTesting() {
 		audioSource.Play();								// play the collision audio for the muscle
+		inputManager.ArduinoOutputWrite (muscleNumber); // activate LED on the mask
 		gameManager.AddRedMuscleToList(muscleNumber);	// add the muscle that is red in the list of "red" (collided) muscles
 		muscleCollided = true;
 		gameManager.PauseGame();						// Freeze movement + Camera
@@ -154,6 +153,7 @@ public class MuscleCollision : MonoBehaviour {
 			uiManager.ShowCorrectAnswerPopup ();		
 			muscleActivated = false;					// reset
 		}
+		inputManager.ArduinoOutputWrite (99); 			// send something random to reset
 		muscle.GetComponent<Renderer> ().material.color = Color.white;		// turn muscle back to original color
 		//muscle.GetComponent<Renderer> ().material.color = defaultColor;		// turn muscle back to original color
 		muscleCollided = false;							// reset
