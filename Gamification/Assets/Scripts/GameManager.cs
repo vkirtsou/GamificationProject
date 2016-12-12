@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 using UnityStandardAssets.Characters.FirstPerson;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -27,23 +28,27 @@ public class GameManager : MonoBehaviour {
 
 	public List<int> muscleNumbersCurrentlyRed = new List<int> ();
 	public List<int> muscleNumbersCurrentlyRedArd = new List<int>();
+	public static string port;
+	public Dropdown dropdownCOM;
 
 	void Awake() {
 		// START //
 		// for debugging. TODO: Delete.
-		/*if (SceneManager.GetActiveScene().name == "Sandbox") {
-			muscle1 = GameObject.Find("Muscle1").GetComponent<MuscleCollision>();
-			muscle2 = GameObject.Find("Muscle2").GetComponent<MuscleCollision>();
-			muscle3 = GameObject.Find("Muscle3").GetComponent<MuscleCollision>();
-			muscle4 = GameObject.Find("Muscle4").GetComponent<MuscleCollision>();
-			muscle5 = GameObject.Find("Muscle5").GetComponent<MuscleCollision>();
-			muscle6 = GameObject.Find("Muscle6").GetComponent<MuscleCollision>();
-			muscle7 = GameObject.Find("Muscle7").GetComponent<MuscleCollision>();
-			muscle8 = GameObject.Find("Muscle8").GetComponent<MuscleCollision>();
-			muscle9 = GameObject.Find("Muscle9").GetComponent<MuscleCollision>();
-		// END //
+		if (SceneManager.GetActiveScene ().name == "Sandbox") {
+			muscle1 = GameObject.Find ("Muscle1").GetComponent<MuscleCollision> ();
+			muscle2 = GameObject.Find ("Muscle2").GetComponent<MuscleCollision> ();
+			muscle3 = GameObject.Find ("Muscle3").GetComponent<MuscleCollision> ();
+			muscle4 = GameObject.Find ("Muscle4").GetComponent<MuscleCollision> ();
+			muscle5 = GameObject.Find ("Muscle5").GetComponent<MuscleCollision> ();
+			muscle6 = GameObject.Find ("Muscle6").GetComponent<MuscleCollision> ();
+			muscle7 = GameObject.Find ("Muscle7").GetComponent<MuscleCollision> ();
+			muscle8 = GameObject.Find ("Muscle8").GetComponent<MuscleCollision> ();
+			muscle9 = GameObject.Find ("Muscle9").GetComponent<MuscleCollision> ();
+			// END //
 
-		}*/
+		} else {
+			port = dropdownCOM.GetComponentInChildren<Text> ().text;
+		}
 	}
 
 	void Update() {
@@ -67,9 +72,6 @@ public class GameManager : MonoBehaviour {
 		if (SceneManager.GetActiveScene().name == "Sandbox") {
 			if (Input.GetKeyDown(KeyCode.Alpha1)) {
 				AddRedMuscleToList(0);	// add the muscle that is red in the list of "red" (collided) muscles
-				//muscle1.audioSource.Play ();
-				//muscle1.StartCoroutine ("WaitToActivateMuscle");
-				//muscle1.muscleCollided = true;
 				muscle1.FakeCollidingForTesting ();
 			}
 			if (Input.GetKeyDown(KeyCode.Alpha2)) {
@@ -156,5 +158,9 @@ public class GameManager : MonoBehaviour {
 			int arduinoEquivalent = 49 + i;
 			muscleNumbersCurrentlyRedArd.Remove (arduinoEquivalent);
 		}
+	}
+
+	public void SaveSelectedCOMPort() {
+		port = dropdownCOM.GetComponentInChildren<Text> ().text;
 	}
 }

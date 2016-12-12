@@ -12,6 +12,7 @@ public class InputManager : MonoBehaviour {
 
 	//SerialPort sp = new SerialPort("COM6", 9600);
 	public SerialPort sp = new SerialPort("COM7", 9600, Parity.None, 8, StopBits.One);
+	public string portName;
 	GameManager gameManager;
 	// Use this for initialization
 
@@ -22,9 +23,13 @@ public class InputManager : MonoBehaviour {
 	void Awake() {
 		gameManager = GameObject.Find ("GameManager").GetComponent<GameManager> ();
 		sp.ReadTimeout = 1;
+
 	}
 
 	void Start() {
+		portName = GameManager.port;
+		Debug.Log (portName);
+		sp.PortName = portName.ToString();
 		if (sp != null) {
 			sp.Close ();
 			if (!sp.IsOpen) {
